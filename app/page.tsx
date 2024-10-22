@@ -1,9 +1,37 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from 'react';
+import type { Expense } from './types/expense';
+
+import getGoogleSheetsExpensesData from './utils/getExpensesData';
 
 export default function Home() {
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchExpensesData() {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await getGoogleSheetsExpensesData();
+        setExpenses(data);
+      } catch (err) {
+        setError('Fail to load expenses data');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchExpensesData();
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-     
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
     </div>
   );
 }
