@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import type { Expense } from './types/expense';
 
-import getGoogleSheetsExpensesData from './utils/get-expenses-data';
+import getGoogleSheetsExpensesData from './hooks/get-expenses-data';
 
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
