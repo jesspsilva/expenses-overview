@@ -6,6 +6,9 @@ import { subDays } from "date-fns"
 import getGoogleSheetsExpensesData from './hooks/get-expenses-data';
 
 import DateRangePicker from '@/components/date-range-picker';
+import DataTable from '@/components/table/data-table';
+import { columns as tableColumns } from '@/components/table/columns';
+
 import type { DateRange } from "react-day-picker"
 
 export default function Home() {
@@ -42,6 +45,9 @@ export default function Home() {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
       <DateRangePicker date={date} onSelect={(value) => setDate(value as DateRange)} />
+      <section className="mt-4">
+        <DataTable data={expenses} columns={tableColumns} />
+      </section>
     </div>
   );
 }
