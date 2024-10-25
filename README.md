@@ -47,7 +47,7 @@ This is a React-based web application for viewing expenses data. It fetches expe
    ```
 
 4. Set up your Google Sheets [https://workspace.google.com/products/sheets/]:
-   - Create a Google Sheet with your expense data
+   - Create a Google Sheet with your expense data. The sheet should have a header row with the following columns: Date, Amount, Description, Category, Card and Owner.
    - Make sure the sheet is publicly accessible via a link (you can do this by sharing the sheet and setting the permissions to "Anyone with the link")
    - Copy the generatedlink
 
