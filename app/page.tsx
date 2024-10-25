@@ -13,6 +13,7 @@ import type { DateRange } from "react-day-picker";
 
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [filteredExpenses, setFilteredExpenses] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const today = new Date();
@@ -21,13 +22,17 @@ export default function Home() {
     to: today,
   });
 
+  const sortExpensesByDate = (expenses: Expense[]) => {
+    return expenses.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  };
+
   useEffect(() => {
     async function fetchExpensesData() {
       setIsLoading(true);
       setError(null);
       try {
         const data = await getGoogleSheetsExpensesData();
-        setExpenses(data);
+        setExpenses(sortExpensesByDate(data));
       } catch (err) {
         setError("Fail to load expenses data");
       } finally {
@@ -37,6 +42,25 @@ export default function Home() {
 
     fetchExpensesData();
   }, []);
+
+  useEffect(() => {
+    if (!date.from || !date.to) return;
+
+    const filteredExpenses = expenses.filter((expense) => {
+      const [day, month, year] = expense.date.split('/');
+      console.log(expense.date);
+      console.log(month, day, year);
+      const expenseDate = new Date(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10)
+      );
+
+      return date.from && date.to && expenseDate >= date.from && expenseDate <= date.to;
+    }) || expenses;
+    console.log(filteredExpenses);
+    setFilteredExpenses(filteredExpenses);
+  }, [date, expenses]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -49,7 +73,7 @@ export default function Home() {
         onSelect={(value) => setDate(value as DateRange)}
       />
       <section className="mt-4">
-        <DataTable data={expenses} columns={tableColumns} />
+        <DataTable data={filteredExpenses} columns={tableColumns} />
       </section>
     </div>
   );
