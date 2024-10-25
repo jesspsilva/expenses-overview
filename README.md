@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💰 Expenses Overview App
+
+This is a React-based web application for viewing expenses data. It fetches expense data from Google Sheets and allows users to select specific months and years to view and analyze their expenses.
+
+## Features
+
+- Fetches expense data from Google Sheets ✅
+- Allows selection of month and year for expense viewing - TBD
+- Table view of expenses - TBD
+- Responsive design using Tailwind CSS - TBD
+- Charts view of expenses - TBD
+
+## Technologies Used
+
+- React [https://react.dev/]
+- Next.js [https://nextjs.org/docs]
+- TypeScript [https://www.typescriptlang.org/docs]
+- Tailwind CSS [https://tailwindcss.com/docs]
+- Shadcn/UI (for components) [https://ui.shadcn.com/docs]
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
+- Node.js (version 20 or later)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/jesspsilva/expenses-overview.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd expenses-overview
+   ```
+
+3. Install dependencies:
+   ```
+   npm install
+   ```
+   or
+   ```
+   yarn install
+   ```
+
+4. Set up your Google Sheets [https://workspace.google.com/products/sheets/]:
+   - Create a Google Sheet with your expense data
+   - Make sure the sheet is publicly accessible via a link (you can do this by sharing the sheet and setting the permissions to "Anyone with the link")
+   - Copy the generatedlink
+
+5. Create a `.env.local` file in the root directory and add your Google Sheet link:
+   ```
+   NEXT_PUBLIC_GOOGLE_SHEET_LINK=your_generated_link_here
+   ```
+
+### Running the App
+
+To run the app in development mode:
+```
 npm run dev
-# or
+```
+or
+```
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Contributions to this project are welcome! If you have any ideas, bug fixes, or enhancements, please feel free to open an issue or submit a pull request. Make sure to follow the existing code style and provide clear documentation for your changes. Just take into account that this is an experimental project and a work in progress.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
