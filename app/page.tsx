@@ -11,7 +11,6 @@ import { columns as tableColumns } from "@/components/table/columns";
 
 import type { DateRange, SelectRangeEventHandler } from "react-day-picker";
 
-
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [filteredExpenses, setFilteredExpenses] = useState<Expense[]>([]);
@@ -22,9 +21,13 @@ export default function Home() {
     from: subDays(today, 30),
     to: today,
   });
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const sortExpensesByDate = (expenses: Expense[]) => {
-    return expenses.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    return expenses.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
   };
 
   useEffect(() => {
@@ -34,6 +37,12 @@ export default function Home() {
       try {
         const data = await getGoogleSheetsExpensesData();
         setExpenses(sortExpensesByDate(data));
+
+        const categories = Array.from(
+          new Set(data.map((expense) => expense.category)),
+        );
+        categories.unshift("All");
+        setCategories(categories);
       } catch (err) {
         setError("Fail to load expenses data");
       } finally {
@@ -47,18 +56,32 @@ export default function Home() {
   useEffect(() => {
     if (!date.from || !date.to) return;
 
-    const filteredExpenses = expenses.filter((expense) => {
-      const [day, month, year] = expense.date.split('/');
-      const expenseDate = new Date(
-        parseInt(year, 10),
-        parseInt(month, 10) - 1,
-        parseInt(day, 10)
-      );
+    const filteredExpensesByDate =
+      expenses.filter((expense) => {
+        const [day, month, year] = expense.date.split("/");
+        const expenseDate = new Date(
+          parseInt(year, 10),
+          parseInt(month, 10) - 1,
+          parseInt(day, 10),
+        );
 
-      return date.from && date.to && expenseDate >= date.from && expenseDate <= date.to;
-    }) || expenses;
-    setFilteredExpenses(filteredExpenses);
-  }, [date, expenses]);
+        return (
+          date.from &&
+          date.to &&
+          expenseDate >= date.from &&
+          expenseDate <= date.to
+        );
+      }) || expenses;
+
+    if (!selectedCategory || selectedCategory === "All") {
+      setFilteredExpenses(filteredExpensesByDate);
+      return;
+    }
+
+    const filteredExpensesByCategory =
+      filteredExpensesByDate.filter((expense) => expense.category === selectedCategory);
+    setFilteredExpenses(filteredExpensesByCategory);
+  }, [date, expenses, selectedCategory]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -66,7 +89,13 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-      <PageHeader date={date} onSelect={setDate as SelectRangeEventHandler} />
+      <PageHeader
+        date={date}
+        onDateSelect={setDate as SelectRangeEventHandler}
+        categories={categories}
+        onCategoryChange={(value) => setSelectedCategory(value)}
+        selectedCategory={selectedCategory}
+      />
       <section className="mt-4">
         <DataTable data={filteredExpenses} columns={tableColumns} />
       </section>
