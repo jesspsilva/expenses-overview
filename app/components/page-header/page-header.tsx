@@ -1,7 +1,10 @@
 import DateRangePicker from "@/components/date-range-picker";
 import SelectFilter from "@/components/select-filter";
+import ColumnVisibilityToggle from "@/components/table/column-visibility-toggle";
 
 import type { DateRange } from "react-day-picker";
+import type { Table } from "@tanstack/react-table";
+import type { Expense } from "@/types/expense";
 
 type FilterOption = {
   values: string[];
@@ -22,12 +25,14 @@ type PageHeaderProps = {
     cards: FilterOption;
     owners: FilterOption;
   };
+  table: Table<Expense>;
 };
 
 export default function PageHeader({
   date,
   onChange,
   filters,
+  table,
 }: PageHeaderProps) {
   return (
     <div className="flex items-center gap-4">
@@ -62,6 +67,10 @@ export default function PageHeader({
           placeholder={filters.owners.placeholder}
           onChange={onChange.owner}
         />
+      </div>
+      <div>
+        <p className="text-sm font-medium mb-1">Columns visibility:</p>
+        <ColumnVisibilityToggle table={table} />
       </div>
     </div>
   );

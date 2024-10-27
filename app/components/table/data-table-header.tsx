@@ -1,13 +1,14 @@
-import type { Table } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 
 import { TableHeader, TableHead, TableRow } from "@/components/ui/table";
 
+import type { Table } from "@tanstack/react-table";
+import type { Expense } from "@/types/expense";
 
-export default function DataTableHeader<TData>({
+export default function DataTableHeader({
   table,
 }: {
-  table: Table<TData>;
+  table: Table<Expense>;
 }) {
     return (
         <TableHeader>

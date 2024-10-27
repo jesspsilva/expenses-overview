@@ -2,6 +2,11 @@
 import { useState, useEffect } from "react";
 import type { Expense } from "./types/expense";
 import { subDays } from "date-fns";
+import {
+  getCoreRowModel,
+  useReactTable,
+  getPaginationRowModel,
+} from "@tanstack/react-table";
 
 import fetchExpensesData from "./utils/expenses-data";
 
@@ -34,6 +39,12 @@ export default function Home() {
   const [selectedCard, setSelectedCard] = useState<string>("");
   const [owners, setOwners] = useState<string[]>([]);
   const [selectedOwner, setSelectedOwner] = useState<string>("");
+  const table = useReactTable({
+    data: filteredExpenses,
+    columns: tableColumns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
 
   useEffect(() => {
     async function loadExpenses() {
@@ -117,9 +128,9 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-      <PageHeader date={date} filters={filters} onChange={onFiltersChange} />
+      <PageHeader date={date} filters={filters} onChange={onFiltersChange} table={table} />
       <section className="mt-4">
-        <DataTable data={filteredExpenses} columns={tableColumns} />
+        <DataTable table={table} />
       </section>
     </div>
   );

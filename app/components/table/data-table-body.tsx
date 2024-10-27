@@ -1,14 +1,14 @@
-import type { Table, ColumnDef } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-export default function DataTableBody<TData, TValue>({
+import type { Table } from "@tanstack/react-table";
+import type { Expense } from "@/types/expense";
+
+export default function DataTableBody({
   table,
-  columns,
 }: {
-  table: Table<TData>;
-  columns: ColumnDef<TData, TValue>[];
+  table: Table<Expense>;
 }) {
   return (
     <TableBody>
@@ -24,7 +24,7 @@ export default function DataTableBody<TData, TValue>({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={columns.length} className="h-24 text-center">
+          <TableCell colSpan={table.getAllColumns().length} className="h-24 text-center">
             No results.
           </TableCell>
         </TableRow>

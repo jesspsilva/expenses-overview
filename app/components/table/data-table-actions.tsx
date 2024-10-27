@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
-import type { Table } from "@tanstack/react-table";
 
-export default function DataTableActions<TData>({
+import type { Table } from "@tanstack/react-table";
+import type { Expense } from "@/types/expense";
+
+export default function DataTableActions({
   table,
 }: {
-  table: Table<TData>;
+  table: Table<Expense>;
 }) {
   const pageCount = table.getPageCount();
   const currentPage = table.getState().pagination.pageIndex + 1;
