@@ -31,25 +31,38 @@ export default function PageHeader({
 }: PageHeaderProps) {
   return (
     <div className="flex items-center gap-4">
-      <DateRangePicker date={date} onSelect={onChange.date} />
-      <SelectFilter
-        values={filters.categories.values}
-        selectedValue={filters.categories.selectedValue}
-        placeholder={filters.categories.placeholder}
-        onChange={onChange.category}
-      />
-      <SelectFilter
-        values={filters.cards.values}
-        selectedValue={filters.cards.selectedValue}
-        placeholder={filters.cards.placeholder}
-        onChange={onChange.card}
-      />
-      <SelectFilter
-        values={filters.owners.values}
-        selectedValue={filters.owners.selectedValue}
-        placeholder={filters.owners.placeholder}
-        onChange={onChange.owner}
-      />
+      <div>
+        <p className="text-sm font-medium mb-1">Date:</p>
+        <DateRangePicker date={date} onSelect={onChange.date} />
+      </div>
+      <div>
+        <p className="text-sm font-medium mb-1">Category:</p>
+        <SelectFilter
+          values={filters.categories.values}
+          selectedValue={filters.categories.selectedValue}
+          placeholder={filters.categories.placeholder}
+          onChange={onChange.category}
+        />
+      </div>
+
+      <div>
+        <p className="text-sm font-medium mb-1">Card:</p>
+        <SelectFilter
+          values={filters.cards.values}
+          selectedValue={filters.cards.selectedValue}
+          placeholder={filters.cards.placeholder}
+          onChange={onChange.card}
+        />
+      </div>
+      <div>
+        <p className="text-sm font-medium mb-1">Owner:</p>
+        <SelectFilter
+          values={filters.owners.values}
+          selectedValue={filters.owners.selectedValue}
+          placeholder={filters.owners.placeholder}
+          onChange={onChange.owner}
+        />
+      </div>
     </div>
   );
 }
