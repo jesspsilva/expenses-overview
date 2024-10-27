@@ -1,25 +1,39 @@
 import DateRangePicker from "@/components/date-range-picker";
-import CategorySelect from "@/components/page-header/category-select";
+import SelectFilter from "@/components/select-filter";
 
-import type { DateRange, SelectRangeEventHandler } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
+
+type FilterOption = {
+  values: string[];
+  selectedValue: string;
+  placeholder: string;
+};
+
+type PageHeaderProps = {
+  date: DateRange;
+  onChange: {
+    date: (date: DateRange | undefined) => void;
+    category: (category: string) => void;
+  };
+  filters: {
+    categories: FilterOption;
+  };
+};
 
 export default function PageHeader({
   date,
-  onDateSelect,
-  categories,
-  onCategoryChange,
-  selectedCategory,
-}: {
-  date: DateRange;
-  onDateSelect: SelectRangeEventHandler;
-  categories: string[];
-  onCategoryChange: (value: string) => void;
-  selectedCategory: string;
-}) {
+  onChange,
+  filters,
+}: PageHeaderProps) {
   return (
     <div className="flex items-center gap-4">
-      <DateRangePicker date={date} onSelect={onDateSelect} />
-      <CategorySelect categories={categories} onChange={onCategoryChange} selectedCategory={selectedCategory} />
+      <DateRangePicker date={date} onSelect={onChange.date} />
+      <SelectFilter
+        values={filters.categories.values}
+        selectedValue={filters.categories.selectedValue}
+        placeholder={filters.categories.placeholder}
+        onChange={onChange.category}
+      />
     </div>
   );
 }

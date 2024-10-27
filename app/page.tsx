@@ -3,13 +3,18 @@ import { useState, useEffect } from "react";
 import type { Expense } from "./types/expense";
 import { subDays } from "date-fns";
 
-import getGoogleSheetsExpensesData from "./hooks/get-expenses-data";
+import fetchExpensesData from "./utils/expenses-data";
 
 import PageHeader from "@/components/page-header/page-header";
 import DataTable from "@/components/table/data-table";
 import { columns as tableColumns } from "@/components/table/columns";
 
-import type { DateRange, SelectRangeEventHandler } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
+
+import {
+  filterExpensesByDateRange,
+  filterExpensesByCategory,
+} from "./utils/expenses-filters";
 
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -24,64 +29,63 @@ export default function Home() {
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const sortExpensesByDate = (expenses: Expense[]) => {
-    return expenses.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    );
-  };
-
   useEffect(() => {
-    async function fetchExpensesData() {
+    async function loadExpenses() {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await getGoogleSheetsExpensesData();
-        setExpenses(sortExpensesByDate(data));
-
-        const categories = Array.from(
-          new Set(data.map((expense) => expense.category)),
-        );
-        categories.unshift("All");
+        const { expenses, categories } =
+          await fetchExpensesData();
+        setExpenses(expenses);
         setCategories(categories);
       } catch (err) {
-        setError("Fail to load expenses data");
+        setError("Failed to load expenses data");
       } finally {
         setIsLoading(false);
       }
     }
 
-    fetchExpensesData();
+    loadExpenses();
   }, []);
 
   useEffect(() => {
     if (!date.from || !date.to) return;
 
-    const filteredExpensesByDate =
-      expenses.filter((expense) => {
-        const [day, month, year] = expense.date.split("/");
-        const expenseDate = new Date(
-          parseInt(year, 10),
-          parseInt(month, 10) - 1,
-          parseInt(day, 10),
-        );
-
-        return (
-          date.from &&
-          date.to &&
-          expenseDate >= date.from &&
-          expenseDate <= date.to
-        );
-      }) || expenses;
+    const filteredExpensesByDate = filterExpensesByDateRange(
+      expenses,
+      date.from,
+      date.to,
+    );
 
     if (!selectedCategory || selectedCategory === "All") {
       setFilteredExpenses(filteredExpensesByDate);
       return;
     }
 
-    const filteredExpensesByCategory =
-      filteredExpensesByDate.filter((expense) => expense.category === selectedCategory);
+    const filteredExpensesByCategory = filterExpensesByCategory(
+      filteredExpensesByDate,
+      selectedCategory,
+    );
     setFilteredExpenses(filteredExpensesByCategory);
   }, [date, expenses, selectedCategory]);
+
+  const onFiltersChange = {
+    date: (newDate: DateRange | undefined) => {
+      setDate(newDate || { from: undefined, to: undefined });
+    },
+    category: (category: string) => {
+      console.log("category", category);
+      setSelectedCategory(category);
+    },
+  };
+
+  const filters = {
+    categories: {
+      values: categories,
+      selectedValue: selectedCategory,
+      placeholder: "Select Category"
+    }
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -91,10 +95,8 @@ export default function Home() {
       <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
       <PageHeader
         date={date}
-        onDateSelect={setDate as SelectRangeEventHandler}
-        categories={categories}
-        onCategoryChange={(value) => setSelectedCategory(value)}
-        selectedCategory={selectedCategory}
+        filters={filters}
+        onChange={onFiltersChange}
       />
       <section className="mt-4">
         <DataTable data={filteredExpenses} columns={tableColumns} />
