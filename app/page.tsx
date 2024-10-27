@@ -48,8 +48,6 @@ export default function Home() {
 
     const filteredExpenses = expenses.filter((expense) => {
       const [day, month, year] = expense.date.split('/');
-      console.log(expense.date);
-      console.log(month, day, year);
       const expenseDate = new Date(
         parseInt(year, 10),
         parseInt(month, 10) - 1,
@@ -58,7 +56,6 @@ export default function Home() {
 
       return date.from && date.to && expenseDate >= date.from && expenseDate <= date.to;
     }) || expenses;
-    console.log(filteredExpenses);
     setFilteredExpenses(filteredExpenses);
   }, [date, expenses]);
 
