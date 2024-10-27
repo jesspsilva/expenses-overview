@@ -5,8 +5,8 @@ This is a React-based web application for viewing expenses data. It fetches expe
 ## Features
 
 - Fetches expense data from Google Sheets ✅
-- Allows selection of month and year for expense viewing - TBD
-- Table view of expenses - TBD
+- Allows selection of month and year for expense viewing - ✅
+- Table view of expenses - ✅
 - Responsive design using Tailwind CSS - TBD
 - Charts view of expenses - TBD
 
