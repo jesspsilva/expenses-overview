@@ -18,12 +18,23 @@ export const filterExpensesByDateRange = (
     return expenseDate >= dateFrom && expenseDate <= dateTo;
   });
 };
+const filterExpensesByField = (
+  expenses: Expense[],
+  field: keyof Expense,
+  value: string,
+) => {
+  if (!value || value === "All") return expenses;
+
+  return expenses.filter((expense) => expense[field] === value);
+};
 
 export const filterExpensesByCategory = (
   expenses: Expense[],
   category: string,
-) => {
-  if (!category || category === "All") return expenses;
-  
-  return expenses.filter((expense) => expense.category === category);
-};
+) => filterExpensesByField(expenses, "category", category);
+
+export const filterExpensesByCard = (expenses: Expense[], card: string) =>
+  filterExpensesByField(expenses, "card", card);
+
+export const filterExpensesByOwner = (expenses: Expense[], owner: string) =>
+  filterExpensesByField(expenses, "owner", owner);

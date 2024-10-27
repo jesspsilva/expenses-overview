@@ -14,9 +14,13 @@ type PageHeaderProps = {
   onChange: {
     date: (date: DateRange | undefined) => void;
     category: (category: string) => void;
+    card: (card: string) => void;
+    owner: (owner: string) => void;
   };
   filters: {
     categories: FilterOption;
+    cards: FilterOption;
+    owners: FilterOption;
   };
 };
 
@@ -33,6 +37,18 @@ export default function PageHeader({
         selectedValue={filters.categories.selectedValue}
         placeholder={filters.categories.placeholder}
         onChange={onChange.category}
+      />
+      <SelectFilter
+        values={filters.cards.values}
+        selectedValue={filters.cards.selectedValue}
+        placeholder={filters.cards.placeholder}
+        onChange={onChange.card}
+      />
+      <SelectFilter
+        values={filters.owners.values}
+        selectedValue={filters.owners.selectedValue}
+        placeholder={filters.owners.placeholder}
+        onChange={onChange.owner}
       />
     </div>
   );

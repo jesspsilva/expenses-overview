@@ -14,6 +14,8 @@ import type { DateRange } from "react-day-picker";
 import {
   filterExpensesByDateRange,
   filterExpensesByCategory,
+  filterExpensesByCard,
+  filterExpensesByOwner,
 } from "./utils/expenses-filters";
 
 export default function Home() {
@@ -28,16 +30,22 @@ export default function Home() {
   });
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [cards, setCards] = useState<string[]>([]);
+  const [selectedCard, setSelectedCard] = useState<string>("");
+  const [owners, setOwners] = useState<string[]>([]);
+  const [selectedOwner, setSelectedOwner] = useState<string>("");
 
   useEffect(() => {
     async function loadExpenses() {
       setIsLoading(true);
       setError(null);
       try {
-        const { expenses, categories } =
+        const { expenses, categories, cards, owners } =
           await fetchExpensesData();
         setExpenses(expenses);
         setCategories(categories);
+        setCards(cards);
+        setOwners(owners);
       } catch (err) {
         setError("Failed to load expenses data");
       } finally {
@@ -51,31 +59,37 @@ export default function Home() {
   useEffect(() => {
     if (!date.from || !date.to) return;
 
-    const filteredExpensesByDate = filterExpensesByDateRange(
-      expenses,
-      date.from,
-      date.to,
-    );
+    const filtered = expenses
+      .filter(
+        (expense) =>
+          filterExpensesByDateRange([expense], date.from!, date.to!).length > 0,
+      )
+      .filter(
+        (expense) =>
+          filterExpensesByCategory([expense], selectedCategory).length > 0,
+      )
+      .filter(
+        (expense) => filterExpensesByCard([expense], selectedCard).length > 0,
+      )
+      .filter(
+        (expense) => filterExpensesByOwner([expense], selectedOwner).length > 0,
+      );
 
-    if (!selectedCategory || selectedCategory === "All") {
-      setFilteredExpenses(filteredExpensesByDate);
-      return;
-    }
-
-    const filteredExpensesByCategory = filterExpensesByCategory(
-      filteredExpensesByDate,
-      selectedCategory,
-    );
-    setFilteredExpenses(filteredExpensesByCategory);
-  }, [date, expenses, selectedCategory]);
+    setFilteredExpenses(filtered);
+  }, [date, expenses, selectedCategory, selectedCard, selectedOwner]);
 
   const onFiltersChange = {
     date: (newDate: DateRange | undefined) => {
       setDate(newDate || { from: undefined, to: undefined });
     },
     category: (category: string) => {
-      console.log("category", category);
       setSelectedCategory(category);
+    },
+    card: (card: string) => {
+      setSelectedCard(card);
+    },
+    owner: (owner: string) => {
+      setSelectedOwner(owner);
     },
   };
 
@@ -83,8 +97,18 @@ export default function Home() {
     categories: {
       values: categories,
       selectedValue: selectedCategory,
-      placeholder: "Select Category"
-    }
+      placeholder: "Select Category",
+    },
+    cards: {
+      values: cards,
+      selectedValue: selectedCard,
+      placeholder: "Select Card",
+    },
+    owners: {
+      values: owners,
+      selectedValue: selectedOwner,
+      placeholder: "Select Owner",
+    },
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -93,11 +117,7 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-      <PageHeader
-        date={date}
-        filters={filters}
-        onChange={onFiltersChange}
-      />
+      <PageHeader date={date} filters={filters} onChange={onFiltersChange} />
       <section className="mt-4">
         <DataTable data={filteredExpenses} columns={tableColumns} />
       </section>
