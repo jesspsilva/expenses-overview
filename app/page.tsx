@@ -5,11 +5,12 @@ import { subDays } from "date-fns";
 
 import getGoogleSheetsExpensesData from "./hooks/get-expenses-data";
 
-import DateRangePicker from "@/components/date-range-picker";
+import PageHeader from "@/components/page-header/page-header";
 import DataTable from "@/components/table/data-table";
 import { columns as tableColumns } from "@/components/table/columns";
 
-import type { DateRange } from "react-day-picker";
+import type { DateRange, SelectRangeEventHandler } from "react-day-picker";
+
 
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -65,10 +66,7 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-      <DateRangePicker
-        date={date}
-        onSelect={(value) => setDate(value as DateRange)}
-      />
+      <PageHeader date={date} onSelect={setDate as SelectRangeEventHandler} />
       <section className="mt-4">
         <DataTable data={filteredExpenses} columns={tableColumns} />
       </section>
