@@ -5,15 +5,13 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { Table } from "@tanstack/react-table";
 import type { Expense } from "@/types/expense";
 
-
 export default function DataTableBody({
   table,
-  categoryBadgeColors,
+  badgeColors,
 }: {
   table: Table<Expense>;
-  categoryBadgeColors: Record<string, string>;
+  badgeColors: Record<string, string>;
 }) {
-  console.log(categoryBadgeColors);
   return (
     <TableBody>
       {table.getRowModel().rows?.length ? (
@@ -21,19 +19,19 @@ export default function DataTableBody({
           <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
             {row.getVisibleCells().map((cell) => (
               <TableCell key={cell.id}>
-                {cell.column.id === "category" ? (
+                {["category", "card", "owner"].includes(cell.column.id) ? (
                   <div className="flex gap-1 flex-wrap">
                     {(Array.isArray(cell.getValue<string | string[]>())
                       ? cell.getValue<string[]>()
                       : [cell.getValue<string>()]
-                    ).map((category: string) => {
-                      const backgroundColor = categoryBadgeColors[category];
+                    ).map((value: string) => {
+                      const backgroundColor = badgeColors[value];
                       return (
                         <div
-                          key={category}
+                          key={value}
                           className={`${backgroundColor} rounded-md px-2 py-1`}
                         >
-                          {category}
+                          {value}
                         </div>
                       );
                     })}

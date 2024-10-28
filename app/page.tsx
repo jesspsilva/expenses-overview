@@ -23,7 +23,7 @@ import {
   filterExpensesByOwner,
 } from "./utils/expenses-filters";
 
-import { createCategoryColorMap } from "./utils/category-badge-colors";
+import { createBadgeColorsMap } from "./utils/badge-colors";
 
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -124,7 +124,8 @@ export default function Home() {
     },
   };
 
-  const categoryColorMap = createCategoryColorMap(categories);
+  const valuesForBadges = [...cards, ...categories, ...owners];
+  const badgesColorsMap = createBadgeColorsMap(valuesForBadges);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -132,9 +133,14 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-      <PageHeader date={date} filters={filters} onChange={onFiltersChange} table={table} />
+      <PageHeader
+        date={date}
+        filters={filters}
+        onChange={onFiltersChange}
+        table={table}
+      />
       <section className="mt-4">
-        <DataTable table={table} categoryBadgeColors={categoryColorMap} />
+        <DataTable table={table} badgeColors={badgesColorsMap} />
       </section>
     </div>
   );
