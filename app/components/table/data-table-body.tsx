@@ -4,14 +4,14 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 import type { Table } from "@tanstack/react-table";
 import type { Expense } from "@/types/expense";
-import type { CategoryColorMap } from "@/utils/category-badge-colors";
+
 
 export default function DataTableBody({
   table,
   categoryBadgeColors,
 }: {
   table: Table<Expense>;
-  categoryBadgeColors: CategoryColorMap;
+  categoryBadgeColors: Record<string, string>;
 }) {
   console.log(categoryBadgeColors);
   return (
@@ -27,11 +27,11 @@ export default function DataTableBody({
                       ? cell.getValue<string[]>()
                       : [cell.getValue<string>()]
                     ).map((category: string) => {
-                      const style = categoryBadgeColors[category];
+                      const backgroundColor = categoryBadgeColors[category];
                       return (
                         <div
                           key={category}
-                          className={`${style.className} rounded-md px-2 py-1`}
+                          className={`${backgroundColor} rounded-md px-2 py-1`}
                         >
                           {category}
                         </div>

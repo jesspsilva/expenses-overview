@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { tailwindColors as colors, intensities } from "./app/utils/colors";
 
 const config: Config = {
   darkMode: ["class"],
@@ -59,5 +60,10 @@ const config: Config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  safelist: [
+    ...colors.flatMap((color) =>
+      intensities.map((intensity) => `bg-${color}-${intensity}`),
+    ),
+  ],
 };
 export default config;
