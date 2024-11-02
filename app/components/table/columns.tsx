@@ -11,13 +11,6 @@ type ColumnConfig = {
   format?: (value: any) => string;
 };
 
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat("pt-PT", {
-    style: "currency",
-    currency: "EUR",
-  }).format(amount);
-};
-
 const columnConfigs: ColumnConfig[] = [
   { key: "date", header: "Date", width: "w-24" },
   { 
@@ -25,7 +18,6 @@ const columnConfigs: ColumnConfig[] = [
     header: "Amount", 
     width: "w-28", 
     align: "right",
-    format: (value) => formatCurrency(parseFloat(value))
   },
   { key: "description", header: "Description", width: "w-96" },
   { key: "category", header: "Category", width: "w-32" },

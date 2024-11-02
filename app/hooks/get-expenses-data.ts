@@ -1,5 +1,5 @@
 import { Expense } from "../types/expense";
-
+import { parseCSV } from "../utils/parse-csv";
 export default async function getGoogleSheetsExpensesData(): Promise<
   Expense[]
 > {
@@ -13,18 +13,15 @@ export default async function getGoogleSheetsExpensesData(): Promise<
     const response = await fetch(googleSheetLink);
     const csvText = await response.text();
 
-    const rows = csvText.split("\n").slice(1); // Remove header row
-    return rows.map((row) => {
-      const [date, amount, description, category, card, owner] = row.split(",");
-      return {
-        date,
-        amount: parseFloat(amount),
-        description,
-        category,
-        card,
-        owner,
-      };
-    });
+    const parsedData = parseCSV(csvText);
+    return parsedData.map((row: string[]) => ({
+      date: row[0],
+      amount: row[1],
+      description: row[2],
+      category: row[3],
+      card: row[4],
+      owner: row[5],
+    }));
   } catch (err) {
     console.error("Fail to load expenses data", err);
     throw new Error("Fail to load expenses data");
