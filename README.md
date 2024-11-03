@@ -1,47 +1,50 @@
 # 💰 Expenses Overview App
 
-This is a React-based web application for viewing expenses data. It fetches expense data from Google Sheets and allows users to select specific months and years to view and analyze their expenses.
+A React-based web application for viewing expenses data. Fetches expense data from Google Sheets and allows users to select specific months and years to view and analyze their expenses.
 
-## Features
+## ✨ Features
 
-- Fetches expense data from Google Sheets ✅
-- Allows selection of month and year for expense viewing - ✅
-- Table view of expenses - ✅
-- Responsive design using Tailwind CSS - TBD
-- Charts view of expenses - TBD
+- ✅ Fetches expense data from Google Sheets
+- ✅ Date range selection for expense viewing
+- ✅ Table view of expenses
+- ✅ Add new expense form - saving data on Google Form
+- ✅ Filter data by category, card, owner
+- ✅ Hide/show columns
+- ✅ Pagination
+- 🚧 Fetch data by date range
+- 🚧 Responsive design using Tailwind CSS
+- 🚧 Charts view of expenses
 
-## Technologies Used
+## 🛠️ Technologies Used
 
-- React [https://react.dev/]
-- Next.js [https://nextjs.org/docs]
-- TypeScript [https://www.typescriptlang.org/docs]
-- Tailwind CSS [https://tailwindcss.com/docs]
-- Shadcn/UI (for components) [https://ui.shadcn.com/docs]
+- [React](https://react.dev/)
+- [Next.js](https://nextjs.org/docs)
+- [TypeScript](https://www.typescriptlang.org/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Shadcn/UI](https://ui.shadcn.com/docs) (for components)
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js (version 20 or later)
 - npm or yarn
+- Google account with access to Google Sheets and Google Forms
 
 ### Installation
 
 1. Clone the repository:
-
-   ```
+   ```bash
    git clone https://github.com/jesspsilva/expenses-overview.git
    ```
 
-2. Navigate to the project directory:
-
-   ```
+2. Navigate to project directory:
+   ```bash
    cd expenses-overview
    ```
 
 3. Install dependencies:
-
-   ```
+   ```bash
    npm install
    ```
 
@@ -51,15 +54,40 @@ This is a React-based web application for viewing expenses data. It fetches expe
    yarn install
    ```
 
-4. Set up your Google Sheets [https://workspace.google.com/products/sheets/]:
+4. Set up your Google Sheets and Form:
 
-   - Create a Google Sheet with your expense data. The sheet should have a header row with the following columns: Date, Amount, Description, Category, Card and Owner.
-   - Make sure the sheet is publicly accessible via a link (you can do this by sharing the sheet and setting the permissions to "Anyone with the link")
-   - Copy the generatedlink
+   #### Google Sheets Setup
+   - Create a Google Sheet with your expense data
+   - The sheet should have a header row with the following columns: Date, Amount, Description, Category, Card and Owner
+   - Make sure the sheet is publicly accessible via a link
+   - Go to File > Share > Publish to web
+   - Select "Comma-separated values (.csv)" as the format
+   - Copy the generated link
+
+   #### Google Form Setup
+   - Create a new Google Form
+   - Add the following fields (exact names are important):
+     - Date (Short answer)
+     - Amount (Short answer)
+     - Description (Short answer)
+     - Category (Dropdown)
+     - Card (Dropdown)
+     - Owner (Dropdown)
+   - Go to Send > Copy link
+   - In the copied link, replace the field values with placeholders:
+     Date, Value, Description, Category, Card, and Owner
+
+   #### Connecting Form to Sheet
+   - Open your Google Form
+   - Click on "Responses" at the top
+   - Click on the three dots menu (⋮)
+   - Select "Select response destination"
+   - Select your existing spreadsheet
 
 5. Create a `.env.local` file in the root directory and add your Google Sheet link:
    ```
    NEXT_PUBLIC_GOOGLE_SHEET_LINK=your_generated_link_here
+   NEXT_PUBLIC_GOOGLE_FORM_LINK=your_form_submit_link_here
    ```
 
 ### Running the App
