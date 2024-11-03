@@ -14,10 +14,10 @@ import {
   ExpenseFormFieldType,
 } from "@/types/expense-form";
 
-import DateField from "./date-field";
-import { formFields } from "./form-fields";
-import FormInput from "./form-input";
-import SelectInput from "./select-input";
+import DatePicker from "./fields/date-picker";
+import { formFields } from "./config/fields";
+import TextField from "./fields/text-field";
+import SelectField from "./fields/select-field";
 
 const formSchema = z.object({
   date: z.date(),
@@ -31,7 +31,7 @@ const formSchema = z.object({
   owner: z.string().min(1, "Owner is required"),
 });
 
-export default function AddExpenseForm({ data, onClose }: AddExpenseFormProps) {
+export default function ExpenseForm({ data, onClose }: AddExpenseFormProps) {
   const { submitExpense, isSubmitting } = useExpenseSubmission();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -69,14 +69,14 @@ export default function AddExpenseForm({ data, onClose }: AddExpenseFormProps) {
 
     switch (formField.type) {
       case ExpenseFormFieldType.date:
-        return <DateField {...props} />;
+        return <DatePicker {...props} />;
       case ExpenseFormFieldType.number:
       case ExpenseFormFieldType.text:
-        return <FormInput {...props} />;
+        return <TextField {...props} />;
       case ExpenseFormFieldType.select:
         if (formField.name in itemsMapping) {
           return (
-            <SelectInput {...props} items={itemsMapping[formField.name]} />
+            <SelectField {...props} items={itemsMapping[formField.name]} />
           );
         }
         return <></>;

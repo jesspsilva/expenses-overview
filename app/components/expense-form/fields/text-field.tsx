@@ -1,9 +1,9 @@
-import { FormControl, FormItem, FormLabel } from "../ui/form";
-import { Input } from "../ui/input";
+import { FormControl, FormItem, FormLabel } from "../../ui/form";
+import { Input } from "../../ui/input";
 
 import type { ExpenseFormFieldProps } from "@/types/expense-form";
 
-export default function FormInput({ field, label, type }: ExpenseFormFieldProps) {
+export default function TextField({ field, label, type }: ExpenseFormFieldProps) {
   return (
     <FormItem>
       <FormLabel>

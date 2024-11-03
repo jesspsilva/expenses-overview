@@ -3,19 +3,19 @@ import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "../ui/button";
-import { Calendar } from "../ui/calendar";
+import { Button } from "../../ui/button";
+import { Calendar } from "../../ui/calendar";
 import {
   FormControl,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+} from "../../ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 
 import type { ExpenseFormFieldProps } from "@/types/expense-form";
 
-export default function DateField({
+export default function DatePicker({
   field,
   label,
   placeholder,

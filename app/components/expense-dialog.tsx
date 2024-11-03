@@ -1,7 +1,7 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 
-import AddExpenseForm from "./add-expense-form/add-expense-form";
+import ExpenseForm from "./expense-form/expense-form";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -13,7 +13,7 @@ import {
 
 import type { AddExpenseFormProps } from "@/types/expense-form";
 
-export default function AddExpenseDialog({ data }: AddExpenseFormProps) {
+export default function ExpenseDialog({ data }: AddExpenseFormProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -26,7 +26,7 @@ export default function AddExpenseDialog({ data }: AddExpenseFormProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Fill the expense details</DialogTitle>
-          <AddExpenseForm data={data} onClose={() => setIsModalOpen(false)} />
+          <ExpenseForm data={data} onClose={() => setIsModalOpen(false)} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

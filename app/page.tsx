@@ -7,7 +7,7 @@ import {
 import { subDays } from "date-fns";
 import { useEffect, useState } from "react";
 
-import AddExpenseDialog from "@/components/add-expense-dialog";
+import ExpenseDialog from "@/components/expense-dialog";
 import PageHeader from "@/components/page-header/page-header";
 import { columns as tableColumns } from "@/components/table/columns";
 import DataTable from "@/components/table/data-table";
@@ -127,7 +127,7 @@ export default function Home() {
       <header className="flex flex-col">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-          <AddExpenseDialog data={{ categories, cards, owners }} />
+          <ExpenseDialog data={{ categories, cards, owners }} />
         </div>
         <PageHeader filters={filters} table={table} />
       </header>

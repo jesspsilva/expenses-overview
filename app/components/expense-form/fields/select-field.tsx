@@ -1,15 +1,15 @@
-import { FormControl, FormItem, FormLabel } from "../ui/form";
+import { FormControl, FormItem, FormLabel } from "../../ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "../../ui/select";
 
 import type { ExpenseFormFieldProps } from "@/types/expense-form";
 
-export default function SelectInput({
+export default function SelectField({
   field,
   label,
   placeholder,
