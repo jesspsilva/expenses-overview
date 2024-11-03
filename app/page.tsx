@@ -11,8 +11,8 @@ import ExpenseDialog from "@/components/expense-dialog";
 import PageHeader from "@/components/page-header/page-header";
 import { columns as tableColumns } from "@/components/table/config/columns";
 import Table from "@/components/table/table";
-import { Toaster } from "@/components/ui/toaster";
 import LoadingSpinner from "@/components/ui/loading-spinner";
+import { Toaster } from "@/components/ui/toaster";
 
 import fetchExpensesData from "./services/expenses/fetch-expenses";
 import { createBadgeColorsMap } from "./utils/badge-colors";
