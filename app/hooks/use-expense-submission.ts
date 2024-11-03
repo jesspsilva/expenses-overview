@@ -27,12 +27,19 @@ export function useExpenseSubmission() {
         mode: "no-cors",
         method: "POST",
       });
-      
+
+      toast({
+        title: "Success",
+        description: "Expense added successfully",
+        variant: "success",
+      });
+
       return true;
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
-        title: "Failed to add expense",
+        title: "Error",
+        description: "Failed to add expense",
         variant: "destructive",
       });
       return false;

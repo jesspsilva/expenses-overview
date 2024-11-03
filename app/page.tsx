@@ -15,6 +15,7 @@ import PageHeader from "@/components/page-header/page-header";
 import DataTable from "@/components/table/data-table";
 import AddExpenseDialog from "@/components/add-expense-dialog";
 import { columns as tableColumns } from "@/components/table/columns";
+import { Toaster } from "@/components/ui/toaster";
 
 import {
   filterExpensesByDateRange,
@@ -128,6 +129,7 @@ export default function Home() {
       <section className="mt-4">
         <DataTable table={table} badgeColors={badgesColorsMap} />
       </section>
+      <Toaster />
     </div>
   );
 }
