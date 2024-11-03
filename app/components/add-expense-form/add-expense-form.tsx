@@ -14,6 +14,7 @@ import {
   ExpenseFormField,
   ExpenseFormFieldType,
   ExpenseFormFieldProps,
+  AddExpenseFormProps,
 } from "@/types/expense-form";
 
 import { formFields } from "./form-fields";
@@ -27,7 +28,7 @@ const formSchema = z.object({
   owner: z.string(),
 });
 
-export default function AddExpenseForm() {
+export default function AddExpenseForm({ data }: AddExpenseFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,6 +45,12 @@ export default function AddExpenseForm() {
     console.log(values);
   }
 
+  const itemsMapping: Record<string, string[]> = {
+    category: data.categories,
+    card: data.cards,
+    owner: data.owners,
+  };
+
   const formFieldComponents = (field: any, formField: ExpenseFormField) => {
     const props = { field, ...formField } as ExpenseFormFieldProps;
 
@@ -54,7 +61,10 @@ export default function AddExpenseForm() {
       case ExpenseFormFieldType.text:
         return <FormInput {...props} />;
       case ExpenseFormFieldType.select:
-        return <SelectInput {...props} />;
+        if (formField.name in itemsMapping) {
+          return <SelectInput {...props} items={itemsMapping[formField.name]} />;
+        }
+        return null;
       default:
         return <></>;
     }

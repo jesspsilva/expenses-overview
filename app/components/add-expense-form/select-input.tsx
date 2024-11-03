@@ -26,8 +26,8 @@ export default function SelectInput({
         </FormControl>
         <SelectContent>
           {items && items.map((item, index) => (
-            <SelectItem key={`${item.value}-${index}`} value={item.value}>
-              {item.label}
+            <SelectItem key={`${item}-${index}`} value={item}>
+              {item}
             </SelectItem>
           ))}
         </SelectContent>

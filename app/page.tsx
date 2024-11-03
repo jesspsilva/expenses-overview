@@ -135,7 +135,7 @@ export default function Home() {
       <header className="flex flex-col">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-          <AddExpenseDialog />
+          <AddExpenseDialog data={{ categories, cards, owners }} />
         </div>
         <PageHeader
           date={date}

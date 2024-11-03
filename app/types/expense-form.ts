@@ -5,17 +5,12 @@ export enum ExpenseFormFieldType {
   select = "select",
 }
 
-interface ExpenseFormFieldItem {
-  value: string;
-  label: string;
-}
-
 export interface ExpenseFormField {
   name: ExpenseFormFieldNames;
   label: string;
   type: string;
   placeholder?: string;
-  items?: ExpenseFormFieldItem[];
+  items?: string[];
 }
 
 export interface ExpenseFormFieldProps  extends ExpenseFormField {
@@ -29,4 +24,12 @@ export enum ExpenseFormFieldNames {
   category = "category",
   card = "card",
   owner = "owner",
+}
+
+export interface AddExpenseFormProps {
+  data: {
+    categories: string[];
+    cards: string[];
+    owners: string[];
+  };
 }

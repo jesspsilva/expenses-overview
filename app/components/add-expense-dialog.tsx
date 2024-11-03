@@ -10,7 +10,10 @@ import { Button } from "./ui/button";
 import AddExpenseForm from "./add-expense-form/add-expense-form";
 import { PlusIcon } from "@radix-ui/react-icons";
 
-export default function AddExpenseDialog() {
+import type { AddExpenseFormProps } from "@/types/expense-form";
+
+
+export default function AddExpenseDialog({ data }: AddExpenseFormProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -21,7 +24,7 @@ export default function AddExpenseDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Fill the expense details</DialogTitle>
-          <AddExpenseForm />
+          <AddExpenseForm data={data} />
         </DialogHeader>
       </DialogContent>
     </Dialog>
