@@ -12,6 +12,7 @@ import PageHeader from "@/components/page-header/page-header";
 import { columns as tableColumns } from "@/components/table/columns";
 import DataTable from "@/components/table/data-table";
 import { Toaster } from "@/components/ui/toaster";
+import LoadingSpinner from "@/components/loading-spinner";
 
 import fetchExpensesData from "./services/expenses/fetch-expenses";
 import { createBadgeColorsMap } from "./utils/badge-colors";
@@ -113,7 +114,12 @@ export default function Home() {
   const valuesForBadges = [...cards, ...categories, ...owners];
   const badgesColorsMap = createBadgeColorsMap(valuesForBadges);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="h-screen w-screen flex justify-center items-center">
+        <LoadingSpinner />
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
 
   return (
