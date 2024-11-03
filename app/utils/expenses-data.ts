@@ -22,15 +22,12 @@ export default async function fetchExpensesData() {
     const categories = Array.from(
       new Set(data.map((expense) => expense.category)),
     );
-    categories.unshift("All");
 
     const cards = Array.from(new Set(data.map((expense) => expense.card)));
-    cards.unshift("All");
 
     const owners = Array.from(
       new Set(data.map((expense) => expense.owner)),
     );
-    owners.unshift("All");
 
     return {
       expenses: sortedExpenses,

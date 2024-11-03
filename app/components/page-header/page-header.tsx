@@ -10,17 +10,17 @@ type FilterOption = {
   values: string[];
   selectedValue: string;
   placeholder: string;
+  onChange: (value: string) => void;
+};
+
+type DateFilterOption = {
+  values: DateRange;
+  onChange: (value: DateRange | undefined) => void;
 };
 
 type PageHeaderProps = {
-  date: DateRange;
-  onChange: {
-    date: (date: DateRange | undefined) => void;
-    category: (category: string) => void;
-    card: (card: string) => void;
-    owner: (owner: string) => void;
-  };
   filters: {
+    date: DateFilterOption;
     categories: FilterOption;
     cards: FilterOption;
     owners: FilterOption;
@@ -28,48 +28,35 @@ type PageHeaderProps = {
   table: Table<Expense>;
 };
 
-export default function PageHeader({
-  date,
-  onChange,
-  filters,
-  table,
-}: PageHeaderProps) {
+export default function PageHeader({ filters, table }: PageHeaderProps) {
   return (
     <div className="flex items-center gap-4">
       <div>
-        <p className="text-sm font-medium mb-1">Date:</p>
-        <DateRangePicker date={date} onSelect={onChange.date} />
-      </div>
-      <div>
-        <p className="text-sm font-medium mb-1">Category:</p>
-        <SelectFilter
-          values={filters.categories.values}
-          selectedValue={filters.categories.selectedValue}
-          placeholder={filters.categories.placeholder}
-          onChange={onChange.category}
+        <DateRangePicker
+          date={filters.date.values}
+          onSelect={filters.date.onChange}
         />
       </div>
 
+      {Object.entries(filters).map(([key, filter]) => {
+        if (key === "date") return null;
+
+        const typedFilter = filter as FilterOption;
+        const values = ["All", ...(typedFilter.values)];
+
+        return (
+          <div key={key}>
+            <SelectFilter
+              key={key}
+              values={values}
+              selectedValue={typedFilter.selectedValue}
+              placeholder={typedFilter.placeholder}
+              onChange={typedFilter.onChange}
+            />
+          </div>
+        );
+      })}
       <div>
-        <p className="text-sm font-medium mb-1">Card:</p>
-        <SelectFilter
-          values={filters.cards.values}
-          selectedValue={filters.cards.selectedValue}
-          placeholder={filters.cards.placeholder}
-          onChange={onChange.card}
-        />
-      </div>
-      <div>
-        <p className="text-sm font-medium mb-1">Owner:</p>
-        <SelectFilter
-          values={filters.owners.values}
-          selectedValue={filters.owners.selectedValue}
-          placeholder={filters.owners.placeholder}
-          onChange={onChange.owner}
-        />
-      </div>
-      <div>
-        <p className="text-sm font-medium mb-1">Columns visibility:</p>
         <ColumnVisibilityToggle table={table} />
       </div>
     </div>

@@ -1,4 +1,5 @@
 import type { Expense } from "../types/expense";
+import type { DateRange } from "react-day-picker";
 
 export const filterExpensesByDateRange = (
   expenses: Expense[],
@@ -38,3 +39,49 @@ export const filterExpensesByCard = (expenses: Expense[], card: string) =>
 
 export const filterExpensesByOwner = (expenses: Expense[], owner: string) =>
   filterExpensesByField(expenses, "owner", owner);
+
+type FilterState = {
+  setDate: (date: DateRange) => void;
+  setSelectedCategory: (category: string) => void;
+  setSelectedCard: (card: string) => void;
+  setSelectedOwner: (owner: string) => void;
+};
+
+export function createFilters(
+  state: {
+    date: DateRange;
+    categories: string[];
+    selectedCategory: string;
+    cards: string[];
+    selectedCard: string;
+    owners: string[];
+    selectedOwner: string;
+  },
+  setState: FilterState
+) {
+  return {
+    date: {
+      onChange: (newDate: DateRange | undefined) => 
+        setState.setDate(newDate || { from: undefined, to: undefined }),
+      values: state.date,
+    },
+    categories: {
+      values: state.categories,
+      selectedValue: state.selectedCategory,
+      placeholder: "Select Category",
+      onChange: setState.setSelectedCategory,
+    },
+    cards: {
+      values: state.cards,
+      selectedValue: state.selectedCard,
+      placeholder: "Select Card",
+      onChange: setState.setSelectedCard,
+    },
+    owners: {
+      values: state.owners,
+      selectedValue: state.selectedOwner,
+      placeholder: "Select Owner",
+      onChange: setState.setSelectedOwner,
+    },
+  };
+}

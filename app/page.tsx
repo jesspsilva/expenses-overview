@@ -21,6 +21,7 @@ import {
   filterExpensesByCategory,
   filterExpensesByCard,
   filterExpensesByOwner,
+  createFilters,
 } from "./utils/expenses-filters";
 
 import { createBadgeColorsMap } from "./utils/badge-colors";
@@ -91,38 +92,23 @@ export default function Home() {
     setFilteredExpenses(filtered);
   }, [date, expenses, selectedCategory, selectedCard, selectedOwner]);
 
-  const onFiltersChange = {
-    date: (newDate: DateRange | undefined) => {
-      setDate(newDate || { from: undefined, to: undefined });
+  const filters = createFilters(
+    {
+      date,
+      categories,
+      selectedCategory,
+      cards,
+      selectedCard,
+      owners,
+      selectedOwner,
     },
-    category: (category: string) => {
-      setSelectedCategory(category);
+    {
+      setDate,
+      setSelectedCategory,
+      setSelectedCard,
+      setSelectedOwner,
     },
-    card: (card: string) => {
-      setSelectedCard(card);
-    },
-    owner: (owner: string) => {
-      setSelectedOwner(owner);
-    },
-  };
-
-  const filters = {
-    categories: {
-      values: categories,
-      selectedValue: selectedCategory,
-      placeholder: "Select Category",
-    },
-    cards: {
-      values: cards,
-      selectedValue: selectedCard,
-      placeholder: "Select Card",
-    },
-    owners: {
-      values: owners,
-      selectedValue: selectedOwner,
-      placeholder: "Select Owner",
-    },
-  };
+  );
 
   const valuesForBadges = [...cards, ...categories, ...owners];
   const badgesColorsMap = createBadgeColorsMap(valuesForBadges);
@@ -137,12 +123,7 @@ export default function Home() {
           <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
           <AddExpenseDialog data={{ categories, cards, owners }} />
         </div>
-        <PageHeader
-          date={date}
-          filters={filters}
-          onChange={onFiltersChange}
-          table={table}
-        />
+        <PageHeader filters={filters} table={table} />
       </header>
       <section className="mt-4">
         <DataTable table={table} badgeColors={badgesColorsMap} />
