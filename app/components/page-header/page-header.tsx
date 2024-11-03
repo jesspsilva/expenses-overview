@@ -1,6 +1,6 @@
-import DateRangePicker from "@/components/ui/date-range-picker";
-import SelectFilter from "@/components/ui/select-filter";
 import ColumnVisibilityToggle from "@/components/table/column-visibility-toggle";
+import Combobox from "@/components/ui/combobox";
+import DateRangePicker from "@/components/ui/date-range-picker";
 
 import type { Expense } from "@/types/expense";
 import type { Table } from "@tanstack/react-table";
@@ -42,12 +42,11 @@ export default function PageHeader({ filters, table }: PageHeaderProps) {
         if (key === "date") return null;
 
         const typedFilter = filter as FilterOption;
-        const values = ["All", ...(typedFilter.values)];
+        const values = ["All", ...typedFilter.values];
 
         return (
           <div key={key}>
-            <SelectFilter
-              key={key}
+            <Combobox
               values={values}
               selectedValue={typedFilter.selectedValue}
               placeholder={typedFilter.placeholder}
