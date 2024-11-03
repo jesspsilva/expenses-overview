@@ -10,6 +10,8 @@ import DateField from "./date-field";
 import FormInput from "./form-input";
 import SelectInput from "./select-input";
 
+import { useExpenseSubmission } from "@/hooks/use-expense-submission";
+
 import {
   ExpenseFormField,
   ExpenseFormFieldType,
@@ -21,19 +23,23 @@ import { formFields } from "./form-fields";
 
 const formSchema = z.object({
   date: z.date(),
-  amount: z.coerce.number(),
-  description: z.string(),
-  category: z.string(),
-  card: z.string(),
-  owner: z.string(),
+  amount: z.string()
+    .min(1, "Amount is required")
+    .refine((val) => parseFloat(val) > 0, "Amount must be greater than 0"),
+  description: z.string().min(1, "Description is required"),
+  category: z.string().min(1, "Category is required"),
+  card: z.string().min(1, "Card is required"),
+  owner: z.string().min(1, "Owner is required"),
 });
 
 export default function AddExpenseForm({ data }: AddExpenseFormProps) {
+  const { submitExpense, isSubmitting } = useExpenseSubmission();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       date: new Date(),
-      amount: 0,
+      amount: "0",
       description: "",
       category: "",
       card: "",
@@ -41,8 +47,14 @@ export default function AddExpenseForm({ data }: AddExpenseFormProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const formattedDate = values.date.toLocaleDateString("pt-PT", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    await submitExpense({ ...values, date: formattedDate });
   }
 
   const itemsMapping: Record<string, string[]> = {
@@ -62,9 +74,11 @@ export default function AddExpenseForm({ data }: AddExpenseFormProps) {
         return <FormInput {...props} />;
       case ExpenseFormFieldType.select:
         if (formField.name in itemsMapping) {
-          return <SelectInput {...props} items={itemsMapping[formField.name]} />;
+          return (
+            <SelectInput {...props} items={itemsMapping[formField.name]} />
+          );
         }
-        return null;
+        return <></>;
       default:
         return <></>;
     }
@@ -73,15 +87,17 @@ export default function AddExpenseForm({ data }: AddExpenseFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {formFields.map((formFieldProps, index) => (
+        {formFields.map((formField, index) => (
           <FormField
             key={index}
             control={form.control}
-            name={formFieldProps.name}
-            render={({ field }) => formFieldComponents(field, formFieldProps)}
+            name={formField.name}
+            render={({ field }) => formFieldComponents(field, formField)}
           />
         ))}
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Adding..." : "Add Expense"}
+        </Button>
       </form>
     </Form>
   );
