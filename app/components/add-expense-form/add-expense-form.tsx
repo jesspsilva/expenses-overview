@@ -23,7 +23,8 @@ import { formFields } from "./form-fields";
 
 const formSchema = z.object({
   date: z.date(),
-  amount: z.string()
+  amount: z
+    .string()
     .min(1, "Amount is required")
     .refine((val) => parseFloat(val) > 0, "Amount must be greater than 0"),
   description: z.string().min(1, "Description is required"),
@@ -32,7 +33,7 @@ const formSchema = z.object({
   owner: z.string().min(1, "Owner is required"),
 });
 
-export default function AddExpenseForm({ data }: AddExpenseFormProps) {
+export default function AddExpenseForm({ data, onClose }: AddExpenseFormProps) {
   const { submitExpense, isSubmitting } = useExpenseSubmission();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,6 +56,8 @@ export default function AddExpenseForm({ data }: AddExpenseFormProps) {
     });
 
     await submitExpense({ ...values, date: formattedDate });
+
+    onClose?.();
   }
 
   const itemsMapping: Record<string, string[]> = {

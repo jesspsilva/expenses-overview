@@ -32,4 +32,5 @@ export interface AddExpenseFormProps {
     cards: string[];
     owners: string[];
   };
+  onClose?: () => void;
 }

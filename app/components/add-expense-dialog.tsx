@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -14,8 +16,10 @@ import type { AddExpenseFormProps } from "@/types/expense-form";
 
 
 export default function AddExpenseDialog({ data }: AddExpenseFormProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>
         <Button>
           <PlusIcon /> Add new expense
@@ -24,7 +28,7 @@ export default function AddExpenseDialog({ data }: AddExpenseFormProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Fill the expense details</DialogTitle>
-          <AddExpenseForm data={data} />
+          <AddExpenseForm data={data} onClose={() => setIsModalOpen(false)} />
         </DialogHeader>
       </DialogContent>
     </Dialog>
