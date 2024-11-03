@@ -1,5 +1,5 @@
-import DateRangePicker from "@/components/date-range-picker";
-import SelectFilter from "@/components/select-filter";
+import DateRangePicker from "@/components/ui/date-range-picker";
+import SelectFilter from "@/components/ui/select-filter";
 import ColumnVisibilityToggle from "@/components/table/column-visibility-toggle";
 
 import type { Expense } from "@/types/expense";
