@@ -7,8 +7,6 @@ import {
 import { subDays } from "date-fns";
 import { useEffect, useState } from "react";
 
-
-
 import AddExpenseDialog from "@/components/add-expense-dialog";
 import PageHeader from "@/components/page-header/page-header";
 import { columns as tableColumns } from "@/components/table/columns";

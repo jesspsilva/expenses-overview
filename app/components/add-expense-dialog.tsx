@@ -13,7 +13,6 @@ import {
 
 import type { AddExpenseFormProps } from "@/types/expense-form";
 
-
 export default function AddExpenseDialog({ data }: AddExpenseFormProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

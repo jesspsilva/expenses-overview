@@ -4,7 +4,6 @@ import { Expense } from "../types/expense";
 
 import { useToast } from "./use-toast";
 
-
 export function useExpenseSubmission() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();

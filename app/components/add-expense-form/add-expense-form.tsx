@@ -19,9 +19,6 @@ import { formFields } from "./form-fields";
 import FormInput from "./form-input";
 import SelectInput from "./select-input";
 
-
-
-
 const formSchema = z.object({
   date: z.date(),
   amount: z
