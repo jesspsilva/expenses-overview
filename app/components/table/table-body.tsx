@@ -1,11 +1,15 @@
 import { flexRender } from "@tanstack/react-table";
 
-import { TableBody, TableCell, TableRow } from "@/components/ui/table";
+import {
+  TableBody as TableBodyUI,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table";
 
 import type { Expense } from "@/types/expense";
 import type { Table } from "@tanstack/react-table";
 
-export default function DataTableBody({
+export default function TableBody({
   table,
   badgeColors,
 }: {
@@ -13,7 +17,7 @@ export default function DataTableBody({
   badgeColors: Record<string, string>;
 }) {
   return (
-    <TableBody>
+    <TableBodyUI>
       {table.getRowModel().rows?.length ? (
         table.getRowModel().rows.map((row) => (
           <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
@@ -53,6 +57,6 @@ export default function DataTableBody({
           </TableCell>
         </TableRow>
       )}
-    </TableBody>
+    </TableBodyUI>
   );
 }

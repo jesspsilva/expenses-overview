@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 
 import ExpenseDialog from "@/components/expense-dialog";
 import PageHeader from "@/components/page-header/page-header";
-import { columns as tableColumns } from "@/components/table/columns";
-import DataTable from "@/components/table/data-table";
+import { columns as tableColumns } from "@/components/table/config/columns";
+import Table from "@/components/table/table";
 import { Toaster } from "@/components/ui/toaster";
 import LoadingSpinner from "@/components/loading-spinner";
 
@@ -132,7 +132,7 @@ export default function Home() {
         <PageHeader filters={filters} table={table} />
       </header>
       <section className="mt-4">
-        <DataTable table={table} badgeColors={badgesColorsMap} />
+        <Table table={table} badgeColors={badgesColorsMap} />
       </section>
       <Toaster />
     </div>
