@@ -7,14 +7,14 @@ import {
   useReactTable,
   getPaginationRowModel,
 } from "@tanstack/react-table";
+import type { DateRange } from "react-day-picker";
 
 import fetchExpensesData from "./utils/expenses-data";
 
 import PageHeader from "@/components/page-header/page-header";
 import DataTable from "@/components/table/data-table";
+import AddExpenseDialog from "@/components/add-expense-dialog";
 import { columns as tableColumns } from "@/components/table/columns";
-
-import type { DateRange } from "react-day-picker";
 
 import {
   filterExpensesByDateRange,
@@ -132,13 +132,18 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
-      <PageHeader
-        date={date}
-        filters={filters}
-        onChange={onFiltersChange}
-        table={table}
-      />
+      <header className="flex flex-col">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
+          <AddExpenseDialog />
+        </div>
+        <PageHeader
+          date={date}
+          filters={filters}
+          onChange={onFiltersChange}
+          table={table}
+        />
+      </header>
       <section className="mt-4">
         <DataTable table={table} badgeColors={badgesColorsMap} />
       </section>
