@@ -1,12 +1,13 @@
 "use client";
 
 import { Table } from "@/components/ui/table";
-import DataTableHeader from "./data-table-header";
-import DataTableBody from "./data-table-body";
-import DataTableActions from "./data-table-actions";
 
-import type { Table as TableType } from "@tanstack/react-table";
+import DataTableActions from "./data-table-actions";
+import DataTableBody from "./data-table-body";
+import DataTableHeader from "./data-table-header";
+
 import type { Expense } from "@/types/expense";
+import type { Table as TableType } from "@tanstack/react-table";
 
 interface DataTableProps {
   table: TableType<Expense>;

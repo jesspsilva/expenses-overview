@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 
-import type { Table } from "@tanstack/react-table";
 import type { Expense } from "@/types/expense";
+import type { Table } from "@tanstack/react-table";
 
 export default function DataTableActions({
   table,

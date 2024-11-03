@@ -1,4 +1,4 @@
-import { FormItem, FormLabel, FormControl } from "../ui/form";
+import { FormControl, FormItem, FormLabel } from "../ui/form";
 import {
   Select,
   SelectContent,

@@ -1,8 +1,9 @@
 import { useState } from "react";
 
+import { Expense } from "../types/expense";
+
 import { useToast } from "./use-toast";
 
-import { Expense } from "../types/expense";
 
 export function useExpenseSubmission() {
   const [isSubmitting, setIsSubmitting] = useState(false);

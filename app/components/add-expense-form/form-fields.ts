@@ -1,4 +1,4 @@
-import { ExpenseFormFieldNames, ExpenseFormFieldType, ExpenseFormField } from "@/types/expense-form";
+import { ExpenseFormField, ExpenseFormFieldNames, ExpenseFormFieldType } from "@/types/expense-form";
 
 export const formFields = [
     {

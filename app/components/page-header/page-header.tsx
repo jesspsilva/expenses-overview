@@ -2,9 +2,9 @@ import DateRangePicker from "@/components/date-range-picker";
 import SelectFilter from "@/components/select-filter";
 import ColumnVisibilityToggle from "@/components/table/column-visibility-toggle";
 
-import type { DateRange } from "react-day-picker";
-import type { Table } from "@tanstack/react-table";
 import type { Expense } from "@/types/expense";
+import type { Table } from "@tanstack/react-table";
+import type { DateRange } from "react-day-picker";
 
 type FilterOption = {
   values: string[];

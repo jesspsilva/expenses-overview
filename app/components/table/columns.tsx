@@ -1,6 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+
 import type { Expense } from "@/types/expense";
 
 type ColumnConfig = {

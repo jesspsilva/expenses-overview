@@ -1,16 +1,15 @@
+import { PlusIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 
+import AddExpenseForm from "./add-expense-form/add-expense-form";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogTrigger,
 } from "./ui/dialog";
-import { Button } from "./ui/button";
-import AddExpenseForm from "./add-expense-form/add-expense-form";
-import { PlusIcon } from "@radix-ui/react-icons";
 
 import type { AddExpenseFormProps } from "@/types/expense-form";
 

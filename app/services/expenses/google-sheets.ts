@@ -1,9 +1,8 @@
-import type { Expense } from "../../types/expense";
 import { parseCSV } from "../../utils/parse-csv";
 
-export default async function fetchGoogleSheetsData(): Promise<
-  Expense[]
-> {
+import type { Expense } from "../../types/expense";
+
+export default async function fetchGoogleSheetsData(): Promise<Expense[]> {
   try {
     const googleSheetLink = process.env.NEXT_PUBLIC_GOOGLE_SHEET_LINK;
 

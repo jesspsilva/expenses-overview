@@ -2,8 +2,8 @@ import { flexRender } from "@tanstack/react-table";
 
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-import type { Table } from "@tanstack/react-table";
 import type { Expense } from "@/types/expense";
+import type { Table } from "@tanstack/react-table";
 
 export default function DataTableBody({
   table,

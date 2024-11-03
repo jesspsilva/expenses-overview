@@ -1,30 +1,32 @@
 "use client";
-import { useState, useEffect } from "react";
-import type { Expense } from "./types/expense";
-import { subDays } from "date-fns";
 import {
   getCoreRowModel,
-  useReactTable,
   getPaginationRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
-import type { DateRange } from "react-day-picker";
+import { subDays } from "date-fns";
+import { useEffect, useState } from "react";
 
-import fetchExpensesData from "./services/expenses/fetch-expenses";
 
-import PageHeader from "@/components/page-header/page-header";
-import DataTable from "@/components/table/data-table";
+
 import AddExpenseDialog from "@/components/add-expense-dialog";
+import PageHeader from "@/components/page-header/page-header";
 import { columns as tableColumns } from "@/components/table/columns";
+import DataTable from "@/components/table/data-table";
 import { Toaster } from "@/components/ui/toaster";
 
-import {
-  filterExpensesByDateRange,
-  filterExpensesByCategory,
-  filterExpensesByCard,
-  filterExpensesByOwner,
-  createFilters,
-} from "./utils/expenses-filters";
+import fetchExpensesData from "./services/expenses/fetch-expenses";
 import { createBadgeColorsMap } from "./utils/badge-colors";
+import {
+  createFilters,
+  filterExpensesByCard,
+  filterExpensesByCategory,
+  filterExpensesByDateRange,
+  filterExpensesByOwner,
+} from "./utils/expenses-filters";
+
+import type { Expense } from "./types/expense";
+import type { DateRange } from "react-day-picker";
 
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
