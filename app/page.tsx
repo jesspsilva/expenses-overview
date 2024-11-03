@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import type { DateRange } from "react-day-picker";
 
-import fetchExpensesData from "./utils/expenses-data";
+import fetchExpensesData from "./services/expenses/fetch-expenses";
 
 import PageHeader from "@/components/page-header/page-header";
 import DataTable from "@/components/table/data-table";
@@ -24,7 +24,6 @@ import {
   filterExpensesByOwner,
   createFilters,
 } from "./utils/expenses-filters";
-
 import { createBadgeColorsMap } from "./utils/badge-colors";
 
 export default function Home() {

@@ -1,6 +1,6 @@
-import type { Expense } from "../types/expense";
+import fetchGoogleSheetsData from "./google-sheets";
 
-import getGoogleSheetsExpensesData from "../hooks/get-expenses-data";
+import type { Expense } from "../../types/expense";
 
 const sortExpensesByDate = (expenses: Expense[]) => {
   return expenses.sort(
@@ -10,7 +10,7 @@ const sortExpensesByDate = (expenses: Expense[]) => {
 
 export default async function fetchExpensesData() {
   try {
-    const csvData = await getGoogleSheetsExpensesData();
+    const csvData = await fetchGoogleSheetsData();
     const data = csvData.map((row) => ({
         ...row,
         owner: row.owner.trim(),

@@ -1,6 +1,7 @@
-import { Expense } from "../types/expense";
-import { parseCSV } from "../utils/parse-csv";
-export default async function getGoogleSheetsExpensesData(): Promise<
+import type { Expense } from "../../types/expense";
+import { parseCSV } from "../../utils/parse-csv";
+
+export default async function fetchGoogleSheetsData(): Promise<
   Expense[]
 > {
   try {
