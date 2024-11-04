@@ -47,13 +47,13 @@ export default function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("w-[200px] justify-between", className)}
+          className={cn("w-full min-w-[200px] justify-between", className)}
         >
           {selectedValue || placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={cn("w-[200px] p-0", className)}>
+      <PopoverContent className={cn("w-full p-0", className)}>
         <Command>
           <CommandInput placeholder={searchPlaceholder} />
           <CommandList>

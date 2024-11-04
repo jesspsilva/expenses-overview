@@ -70,18 +70,21 @@ export function createFilters(
       selectedValue: state.selectedCategory,
       placeholder: "Select Category",
       onChange: setState.setSelectedCategory,
+      label: "Category:"
     },
     cards: {
       values: state.cards,
       selectedValue: state.selectedCard,
       placeholder: "Select Card",
       onChange: setState.setSelectedCard,
+      label: "Card:"
     },
     owners: {
       values: state.owners,
       selectedValue: state.selectedOwner,
       placeholder: "Select Owner",
       onChange: setState.setSelectedOwner,
+      label: "Owner:"
     },
   };
 }

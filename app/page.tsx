@@ -125,7 +125,7 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       <header className="flex flex-col">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-10">
           <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
           <ExpenseDialog data={{ categories, cards, owners }} />
         </div>

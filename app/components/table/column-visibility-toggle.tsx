@@ -1,3 +1,5 @@
+import { ViewVerticalIcon } from "@radix-ui/react-icons";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -20,6 +22,7 @@ export default function ColumnVisibilityToggle({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="ml-auto">
+          <ViewVerticalIcon />
           Columns
         </Button>
       </DropdownMenuTrigger>

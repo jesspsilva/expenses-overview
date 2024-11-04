@@ -1,16 +1,22 @@
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
+
 import ColumnVisibilityToggle from "@/components/table/column-visibility-toggle";
-import Combobox from "@/components/ui/combobox";
+import { Button } from "@/components/ui/button";
 import DateRangePicker from "@/components/ui/date-range-picker";
+
+import Filters from "./filters";
 
 import type { Expense } from "@/types/expense";
 import type { Table } from "@tanstack/react-table";
 import type { DateRange } from "react-day-picker";
 
-type FilterOption = {
+export type FilterOption = {
   values: string[];
   selectedValue: string;
   placeholder: string;
   onChange: (value: string) => void;
+  label: string;
 };
 
 type DateFilterOption = {
@@ -18,7 +24,7 @@ type DateFilterOption = {
   onChange: (value: DateRange | undefined) => void;
 };
 
-type PageHeaderProps = {
+export type PageHeaderProps = {
   filters: {
     date: DateFilterOption;
     categories: FilterOption;
@@ -29,35 +35,29 @@ type PageHeaderProps = {
 };
 
 export default function PageHeader({ filters, table }: PageHeaderProps) {
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
   return (
-    <div className="flex items-center gap-4">
-      <div>
-        <DateRangePicker
-          date={filters.date.values}
-          onSelect={filters.date.onChange}
-        />
-      </div>
-
-      {Object.entries(filters).map(([key, filter]) => {
-        if (key === "date") return null;
-
-        const typedFilter = filter as FilterOption;
-        const values = ["All", ...typedFilter.values];
-
-        return (
-          <div key={key}>
-            <Combobox
-              values={values}
-              selectedValue={typedFilter.selectedValue}
-              placeholder={typedFilter.placeholder}
-              onChange={typedFilter.onChange}
-            />
-          </div>
-        );
-      })}
-      <div>
-        <ColumnVisibilityToggle table={table} />
-      </div>
+    <div className="flex4">
+      <section className="flex lg:items-center gap-4 lg:justify-between lg:flex-row flex-col">
+        <div className="flex items-center gap-4">
+          <DateRangePicker
+            date={filters.date.values}
+            onSelect={filters.date.onChange}
+          />
+          <Button
+            variant="outline"
+            onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+          >
+            <MixerHorizontalIcon />
+            Filters
+          </Button>
+        </div>
+        <div className="hidden lg:block">
+          <ColumnVisibilityToggle table={table} />
+        </div>
+      </section>
+      {isFiltersOpen && <Filters filters={filters} />}
     </div>
   );
 }
