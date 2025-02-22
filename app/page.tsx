@@ -13,6 +13,9 @@ import { columns as tableColumns } from "@/components/table/config/columns";
 import Table from "@/components/table/table";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Toaster } from "@/components/ui/toaster";
+import { Card } from "@/components/ui/card";
+
+import useTotalOfExpenses from "./hooks/use-total-of-expenses";
 
 import fetchExpensesData from "./services/expenses/fetch-expenses";
 import { createBadgeColorsMap } from "./utils/badge-colors";
@@ -26,6 +29,7 @@ import {
 
 import type { Expense } from "./types/expense";
 import type { DateRange } from "react-day-picker";
+import useTotalReimbursement from "./hooks/use-total-reimbursement";
 
 export default function Home() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -93,6 +97,12 @@ export default function Home() {
     setFilteredExpenses(filtered);
   }, [date, expenses, selectedCategory, selectedCard, selectedOwner]);
 
+  const formattedTotalOfExpenses =
+    (filteredExpenses && useTotalOfExpenses(filteredExpenses)) || "0€";
+
+  const formattedTotalOfReimbursement =
+    (filteredExpenses && useTotalReimbursement(filteredExpenses)) || "0€";
+
   const filters = createFilters(
     {
       date,
@@ -121,7 +131,7 @@ export default function Home() {
       </div>
     );
   if (error) return <div>Error: {error}</div>;
-
+  
   return (
     <div className="container mx-auto p-4">
       <header className="flex flex-col">
@@ -129,6 +139,13 @@ export default function Home() {
           <h1 className="text-2xl font-bold mb-4">Expenses Overview</h1>
           <ExpenseDialog data={{ categories, cards, owners }} />
         </div>
+        <section className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8">
+          <Card title="Total Expenses" value={formattedTotalOfExpenses} />
+          <Card
+            title="Total Reimbursement"
+            value={formattedTotalOfReimbursement}
+          />
+        </section>
         <PageHeader filters={filters} table={table} />
       </header>
       <section className="mt-4">
