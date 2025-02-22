@@ -7,7 +7,7 @@ import {
 import { subDays } from "date-fns";
 import { useEffect, useState } from "react";
 
-import ExpenseDialog from "@/components/expense-dialog";
+import ExpenseDialog from "@/components/ui/expense-dialog";
 import PageHeader from "@/components/page-header/page-header";
 import { columns as tableColumns } from "@/components/table/config/columns";
 import Table from "@/components/table/table";
@@ -111,7 +111,7 @@ export default function Home() {
     },
   );
 
-  const valuesForBadges = [...cards, ...categories, ...owners];
+  const valuesForBadges = [...owners, ...cards, ...categories];
   const badgesColorsMap = createBadgeColorsMap(valuesForBadges);
 
   if (isLoading)
