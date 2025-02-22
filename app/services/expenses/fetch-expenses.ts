@@ -35,7 +35,7 @@ export default async function fetchExpensesData() {
       cards,
       owners,
     };
-  } catch (error) {
+  } catch {
     throw new Error("Failed to load expenses data");
   }
 }

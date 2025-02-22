@@ -61,7 +61,7 @@ export default function Home() {
         setCategories(categories);
         setCards(cards);
         setOwners(owners);
-      } catch (err) {
+      } catch {
         setError("Failed to load expenses data");
       } finally {
         setIsLoading(false);
